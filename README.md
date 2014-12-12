@@ -12,12 +12,14 @@ This is a port of Vlambeer/Rami's doPressKit that exports static html files.
 - You can input markdown for description, history and features. Allowing more flexibility.
 - Compresses images and css.
 - Creates a zip file of all your media.
+- Sticky Nav + ScrollSpy.
 
 **Things this does worse:**
 
 - Doesn't have a 'request press copy' feature, since it's not PHP.
 - Right now this only produces a game page, not a company page.
 - Only produces one game page, not pages for multiple projects.
+- Presskit might do some fancier stuff as far as finding and arranging screenshots.
 
 ##Usage
 
