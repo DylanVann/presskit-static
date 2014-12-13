@@ -1,0 +1,317 @@
+doctype html
+html(lang='en')
+  head
+    meta(http-equiv='Content-Type' content='text/html; charset=utf-8')
+    title= data.title
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/uikit/2.12.0/css/uikit.almost-flat.css', rel='stylesheet')
+    link(href='style.css' rel='stylesheet')
+    // You should probably have a favicon here.
+    link(rel='icon', href='/favicon.png')
+    // Google analytics.
+    if data.google_analytics_id
+      include ./includes/_google-analytics.jade
+  body
+    .uk-container.uk-container-center
+      .uk-grid
+        #navigation.uk-width-medium-1-4
+          div(data-uk-sticky='{media: 767}')
+            .nav-header
+              a.title(href='/'): h1= data.title
+              strong Press Kit
+              br
+              br
+              a(href= data.title + ' Presskit.zip')
+                = data.title + ' Presskit.zip'
+
+            - var pageNames = []
+            - pageNames.push('Factsheet')
+            - if (data.description) pageNames.push('Description')
+            - if (data.history) pageNames.push('History')
+            - if (data.features) pageNames.push('Features')
+            - if (data.videos) pageNames.push('Videos')
+            - if (data.screenshots) pageNames.push('Screenshots')
+            - if (data.logo) pageNames.push('Logo & Icon')
+            - if (data.awards) pageNames.push('Awards & Recognition')
+            - if (data.quotes) pageNames.push('Selected Articles')
+            - if (data.additionals) pageNames.push('Additional Links')
+            - if (data.developer_about) pageNames.push('About')
+            - if (data.credits) pageNames.push('Credits')
+            - if (data.contacts) pageNames.push('Contact')
+
+            //- Remove spaces to create list of IDs.
+            - function idify(string){return string.replace(/\s|[&]/g,'');}
+            - var pageIDs = [];
+            - for (var i = 0 ; i < pageNames.length ; i++)
+              - pageIDs[i] = idify(pageNames[i])
+
+            - console.log('Creating presskit with sections:')
+
+            ul.uk-nav.uk-nav-side
+              - for (var i = 0; i < pageNames.length; i++)
+                - console.log( pageNames[i] )
+                //- The about page name and ID are different because 
+                //- using the escaped developer name would
+                //- complicate the scrollspy js code.
+                if (pageNames[i] == 'About')
+                  li
+                    a(href='#About', target=_self, id='m-About')
+                      = 'About ' + data.developer
+                else
+                  li 
+                    a(href='#'+pageIDs[i], target=_self, id='m-'+pageIDs[i])
+                      = pageNames[i]
+        #content.uk-width-medium-3-4
+          img.header(src='images/header.png')
+          .uk-grid
+            .uk-width-medium-2-6
+              //--------------------------------------
+              // Factsheet
+              //--------------------------------------
+              #Factsheet
+                h2 Factsheet
+                if data.developer
+                  p
+                    strong Developer:
+                    br
+                    a(href= data['developer_website'])= data.developer
+                if data.release_date
+                  p
+                    strong Release Date:
+                    br
+                    = data.release_date
+                if data.platforms
+                  p
+                    strong Platforms:
+                    for platform in data.platforms
+                      br
+                      if (platform.link)
+                        a(href= platform.link)= platform.name
+                      else
+                        = platform.name
+                if data.website
+                  p
+                    strong Website:
+                    br
+                    a(href= 'http://' + data.website)= data.website
+                if data.prices
+                  p
+                    strong Regular Price
+                    table
+                      tbody
+                        for price in data.prices
+                          tr
+                            td= price.currency
+                            td= price.value
+            .uk-width-medium-4-6
+
+              //--------------------------------------
+              // Description
+              //--------------------------------------
+              if data.description
+                #Description
+                  h2 Description
+                  != markdown.toHTML( data.description )
+
+              //--------------------------------------
+              // History
+              //--------------------------------------
+              if data.history
+                #History
+                  h2 History
+                  != markdown.toHTML( data.history )
+
+              //--------------------------------------
+              // Features
+              //--------------------------------------
+              if data.features
+                #Features
+                  h2 Features
+                  != markdown.toHTML( data.features )
+
+          hr
+
+          //--------------------------------------
+          // Videos
+          //--------------------------------------
+          if data.videos
+            #Videos
+              h2 Videos
+              for video in data.videos
+                p
+                  strong= video.name
+                  br
+                  if video.youtube
+                    a(href= 'https://www.youtube.com/embed/' + video.vimeo)
+                      Youtube
+                    .uk-responsive-width.iframe-container
+                      iframe(src= 'https://www.youtube.com/embed/' + video.youtube, frameborder='0', webkitallowfullscreen, mozallowfullscreen, allowfullscreen)
+                  if video.vimeo
+                    a(href= 'https://player.vimeo.com/video/' + video.vimeo)
+                      Vimeo
+                    .uk-responsive-width.iframe-container
+                      iframe(src= 'https://player.vimeo.com/video/' + video.vimeo, frameborder='0', webkitallowfullscreen, mozallowfullscreen, allowfullscreen)
+              hr
+
+
+          //--------------------------------------
+          // Screenshots
+          //--------------------------------------
+          if data.screenshots
+            #Screenshots
+              h2 Screenshots
+              .uk-grid.images(data-uk-grid-margin)
+                - for (var i = 1; i <= 4; i++)
+                  .uk-width-medium-1-2
+                    a(href= 'media/gif-' + i + '.png')
+                      img.lazy(src= 'images/blank.png', data-original='media/gif-' + i + '.gif')
+                - for (var i = 1; i <= data.screenshots; i++)
+                  - var imagePath = 'media/screenshot-' + i + '.png'
+                  .uk-width-medium-1-2
+                    a(href= imagePath)
+                      img.lazy(src= 'images/blank.png', data-original= imagePath)
+              hr
+
+          //--------------------------------------
+          // Hero Images
+          //--------------------------------------
+          if data.hero_images
+            #HeroImages
+              h2 Hero Images
+              .uk-grid.images(data-uk-grid-margin)
+                - for (var i = 1; i <= data.hero_images; i++)
+                  .uk-width-medium-1-2
+                    a(href= 'media/hero-' + i + '.png')
+                      img.lazy(src= 'images/blank.png', data-original='media/hero-' + i + '.png')
+              hr
+
+          //--------------------------------------
+          // Logo & Icon
+          //--------------------------------------
+          if data.logo
+            #LogoIcon
+              h2 Logo & Icon
+              .uk-grid.images(data-uk-grid-margin)
+                for logo in data.logo
+                  .uk-width-medium-1-2
+                    a(href= 'media/' + logo)
+                      img.lazy(src= 'images/blank.png', data-original= 'media/' + logo)
+                for icon in data.icon
+                  .uk-width-medium-1-2
+                    a(href= 'media/' + icon)
+                      img.lazy(src= 'images/blank.png', data-original= 'media/' + icon)
+              hr
+
+          //--------------------------------------
+          // Awards
+          //--------------------------------------
+          if data.awards
+            #AwardsRecognition
+              h2 Awards & Recognition
+              ul
+                for award in data.awards
+                  li
+                    = '"' + award.description + '" - '
+                    cite= award.info
+              hr
+
+          //--------------------------------------
+          // Selected Articles
+          //--------------------------------------
+          if data.quotes
+            #SelectedArticles
+              h2 Selected Articles
+              ul
+                for quote in data.quotes
+                  li
+                    = '"' + quote.description + '"'
+                    br
+                    cite
+                      = '- ' +  quote.name + ', '
+                      a(href= quote.link)= quote.website
+              hr
+
+          //--------------------------------------
+          // Additional Links
+          //--------------------------------------
+          if data.additionals
+            #AdditionalLinks
+              h2 Additional Links
+              for additional in data.additionals
+                p
+                  strong= additional.title
+                  br
+                  = additional.description + ' '
+                  a(href= additional.link)= additional.link
+                  | .
+              hr
+
+          //--------------------------------------
+          // About
+          //--------------------------------------
+          if data.developer_about
+            #About
+              h2= 'About ' + data.developer
+              != markdown.toHTML( data.developer_about )
+              hr
+
+          //--------------------------------------
+          // Credits
+          //--------------------------------------
+          mixin credits
+            #Credits
+              h2 Credits
+              for credit in data.credits
+                p
+                  strong= credit.person
+                  br
+                  if credit.website
+                    a(href= credit.website)= credit.role
+                  else
+                    = credit.role
+          mixin contacts
+            #Contact
+              h2 Contact
+              for contact in data.contacts
+                p
+                  strong= contact.name
+                  if contact.link
+                    br
+                    a(href= contact.link)= contact.link
+                  if contact.mail
+                    br
+                    a(href= 'mailto:' + contact.mail)= contact.mail
+
+          - if (data.credits && data.contacts)
+            .uk-grid
+              .uk-width-medium-1-2
+                + credits
+              .uk-width-medium-1-2
+                + contacts
+            hr
+          - else if (data.credits)
+            + credits
+            hr
+          - else if (data.contacts)
+            + contacts
+            hr
+
+          //--------------------------------------
+          // Footer
+          //--------------------------------------
+          .footer
+            :markdown
+              This website is built with
+              [presskit-static](http://github.com/DylanVann/presskit-static),
+              which is based on [presskit()](http://dopresskit.com).
+            p
+              = '© ' + new Date().getFullYear() + ' '
+              a(href= data.developer_website)=  data.developer
+              = '.'
+
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/uikit/2.12.0/js/uikit.min.js')
+    // Sticky navigation sidebar.
+    script(src='//cdnjs.cloudflare.com/ajax/libs/uikit/2.12.0/js/components/sticky.js')
+    // Lazy loading images.
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js')
+    script(src='js/app.min.js')
