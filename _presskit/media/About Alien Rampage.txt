@@ -1,0 +1,18 @@
+Developer: Dylan Vann (dylanvann.com)
+Release Date: TBA
+Platforms: iOS
+Website: alienrampage.net
+
+Alien Rampage is an endless runner with detailed 2D physics and cartoon gore.
+
+You play as an alien that has been captured and experimented upon by a nefarious non-government organisation. When a virus causes the facility to be overrun by zombies you are released to clear a path.
+
+It's pandemonium.
+
+- 2D Ragdoll physics, particles and gore.
+- 9 Weapons.
+- 4 Enemy types.
+- 6 Power-up types.
+- Procedurally generated terrain.
+
+More info: alienrampage.net/presskit
