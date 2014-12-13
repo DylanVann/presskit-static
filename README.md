@@ -1,4 +1,4 @@
-#PressKit Static
+#Static doPressKit()
 
 This is a port of Vlambeer/Rami's doPressKit that exports static html files.
 
@@ -9,7 +9,7 @@ This is a port of Vlambeer/Rami's doPressKit that exports static html files.
     - Jade templating. vs. PHP
     - SASS styling. vs. CSS
     - YAML configuration. vs. XML
-- You can input markdown for description, history and features. Allowing more flexibility.
+- You can input markdown for description, history and features.
 - Compresses images and css.
 - Creates a zip file of all your media.
 - Sticky Nav + ScrollSpy.
@@ -19,13 +19,12 @@ This is a port of Vlambeer/Rami's doPressKit that exports static html files.
 - Doesn't have a 'request press copy' feature, since it's not PHP.
 - Right now this only produces a game page, not a company page.
 - Only produces one game page, not pages for multiple projects.
-- Presskit might do some fancier stuff as far as finding and arranging screenshots.
 
 ##Usage
 
 ###1. Installation. 
 
-This requires node, npm, and grunt. Navigate to the root folder in a terminal to run the commands in the next steps.
+This requires node and npm, and grunt. Navigate to the root folder in a terminal to run the commands in the next steps.
 
 First run:
 
@@ -47,7 +46,11 @@ Then run:
 
 The output is in the `presskit` directory. Put it on your server where you want the presskit to be.
 
-Alternativly, If you want to edit information and have a local site update as you work run `grunt dev`. The `grunt` task does full compilation for production, whereas the `grunt dev` task leaves out a few things for speed:
+***
+
+**Live Updating**
+
+Alternativly, If you want to edit information and have a local site update as you work run `grunt dev`. The grunt task does full compilation for production, whereas the `grunt dev` task leaves out a few things for speed:
 
 - Compression of images.
 - Minification of html.
@@ -55,4 +58,6 @@ Alternativly, If you want to edit information and have a local site update as yo
 - Autoprefixing css.
 - Minification of css.
 
-If you want to get livereloading while looking at the fully compiled site run `grunt prod`. If you want to do something else then you should take a look at Gruntfile.js.
+If you want to get livereloading while looking at the fully compiled site run `grunt prod`, it'll be pretty slow though, since it rezips and everything on any change. 
+
+If you want to do something else then you should take a look at Gruntfile.js.
