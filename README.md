@@ -44,7 +44,9 @@ Add your images to the media folder. Note: The media folder is zipped to create 
 
 Then run:
 
-`grunt`
+```bash
+grunt
+```
 
 The output is in the `presskit` directory. Put it on your server where you want the presskit to be.
 
