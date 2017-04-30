@@ -1,4 +1,6 @@
-# Static doPressKit()
+# Presskit Static
+
+🗞 A static version of presskit(), with Grunt/Jade/SASS/YAML.
 
 This is a port of Vlambeer/Rami's doPressKit that exports static html files.
 
