@@ -22,7 +22,7 @@ This is a port of Vlambeer/Rami's doPressKit that exports static html files.
 
 ## Usage
 
-###1. Installation. 
+### 1. Installation. 
 
 This requires node and npm, and grunt. Navigate to the root folder in a terminal to run the commands in the next steps.
 
